@@ -1,4 +1,4 @@
-module u-eiku
+module github.com/ZachIgarz/u-eiku
 
 go 1.15
 

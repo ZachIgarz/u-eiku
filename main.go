@@ -6,8 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"u-eiku/ia"
-
+	"github.com/ZachIgarz/u-eiku/ia"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"golang.org/x/net/websocket"
@@ -17,6 +16,9 @@ const (
 	sayHi  = "Hola!"
 	sayBye = "Bye..!"
 )
+
+//KeyWords ..
+var KeyWords []string
 
 func hello(c echo.Context) error {
 	websocket.Handler(func(ws *websocket.Conn) {
@@ -41,6 +43,8 @@ func hello(c echo.Context) error {
 }
 
 func main() {
+	KeyWords = ia.NewKeyWords().Words
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -83,7 +87,7 @@ func sendMesaje(ws *websocket.Conn, c echo.Context, receivedrMesage string) {
 	mesage = sayHi + " " + sendMesajeDayOrNight()
 	//TODO: validar que el mensaje contenga palabras clave
 	if receivedrMesage == "Bye!" {
-		ia.Leer()
+
 		mesage = sayBye + " " + sendMesajeDayOrNight()
 	}
 
