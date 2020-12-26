@@ -44,7 +44,6 @@ func hello(c echo.Context) error {
 
 func main() {
 	KeyWords = ia.NewKeyWords().Words
-
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
