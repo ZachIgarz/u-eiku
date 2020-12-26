@@ -2,27 +2,33 @@ package ia
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 )
 
-//KeyWords is the globar variable of keywords
-var KeyWords = make([]string, 0)
+//KeyWords is the global struct of keywords
+type KeyWords struct {
+	Words []string
+}
 
-//Leer ..
-func Leer() {
+//NewKeyWords is the initializatos of keywords
+func NewKeyWords() *KeyWords {
+	return &KeyWords{
+		Words: readWords(),
+	}
+}
+
+func readWords() []string {
+	var words []string
 	file, err := os.Open("/home/zach/PruebasZach/u-eiku/ia/words.txt")
 	if err != nil {
 
 		log.Fatal(err)
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		KeyWords = append(KeyWords, scanner.Text())
+		words = append(words, scanner.Text())
 	}
-
-	fmt.Println(KeyWords[0], KeyWords[2])
+	return words
 }
