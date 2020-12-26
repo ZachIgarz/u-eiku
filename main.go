@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	hi = "Hola"
+	sayHi  = "Hola!"
+	sayBye = "Bye..!"
 )
 
 func hello(c echo.Context) error {
@@ -21,18 +22,19 @@ func hello(c echo.Context) error {
 		for {
 			// Write
 
+			//TODO: validar si es saludoo despedida
+
 			//err := websocket.Message.Send(ws, "Hello, Client!")
-			err := websocket.Message.Send(ws, sendMesajeDayOrNight())
+
+			// Read
+			msg := ""
+			err := websocket.Message.Receive(ws, &msg)
 			if err != nil {
 				c.Logger().Error(err)
 			}
 
-			// Read
-			msg := ""
-			err = websocket.Message.Receive(ws, &msg)
-			if err != nil {
-				c.Logger().Error(err)
-			}
+			sendMesaje(ws, c, msg)
+
 			fmt.Printf("%s\n", msg)
 		}
 	}).ServeHTTP(c.Response(), c.Request())
@@ -63,12 +65,33 @@ func sendMesajeDayOrNight() string {
 	}
 	if number > 20 {
 
-		return hi + " Buenas Noches UwU"
+		return "Buenas Noches UwU"
 	}
 
 	if number > 17 && number < 20 {
-		return hi + " Buenas tardes"
+		return "Buenas tardes"
+	}
+	if number > 5 && number < 17 {
+
+		return "Buenos dias"
 	}
 
 	return ""
+}
+
+func sendMesaje(ws *websocket.Conn, c echo.Context, receivedrMesage string) {
+
+	var mesage string
+	mesage = sayHi + " " + sendMesajeDayOrNight()
+	//TODO: validar que el mensaje contenga palabras clave
+	if receivedrMesage == "Bye!" {
+
+		mesage = sayBye + " " + sendMesajeDayOrNight()
+	}
+
+	err := websocket.Message.Send(ws, mesage)
+
+	if err != nil {
+		c.Logger().Error(err)
+	}
 }

@@ -2,57 +2,62 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>WebSocket</title>
+    <meta charset="utf-8">
+    <title>WebSocket</title>
 </head>
 
 <body>
-  <p id="output"></p>
+    <p id="output"></p>
 
-  <script>
-    var loc = window.location;
-    var uri = 'ws:';
+    <script>
+        var loc = window.location;
+        var uri = 'ws:';
 
-    if (loc.protocol === 'https:') {
-      uri = 'wss:';
-    }
-    uri += '//' + loc.host;
-    uri += loc.pathname + 'ws';
+        if (loc.protocol === 'https:') {
+            uri = 'wss:';
+        }
+        uri += '//' + loc.host;
+        uri += loc.pathname + 'ws';
 
-    ws = new WebSocket(uri)
+        ws = new WebSocket(uri)
 
-    ws.onopen = function() {
-      console.log('Connected')
-    }
+        ws.onopen = function () {
+            console.log('Connected')
+        }
 
-    ws.onmessage = function(evt) {
-      var out = document.getElementById('output');
-      out.innerHTML += evt.data + '<br>';
-    }
+        ws.onmessage = function (evt) {
+            var out = document.getElementById('output');
+            out.innerHTML += evt.data + '<br>';
+        }
 
-    /*
-    setInterval(function() {
-      ws.send('Hello, Server!');
-    }, 1000);*/
+        const sendMesaje = (mesaje) => {
+            ws.send(mesaje);
+        }
 
-    
-
-    function sayHi(){
-
-        mensaje = document.getElementById("mensaje")
-
-        ws.send(mensaje);
-        
-    }
-  </script>
+        function sayHi() {
+            mensaje = document.getElementById("mensaje")
+            sendMesaje(mensaje.value)
+        }
+        function sayBye() {
+            mensaje = document.getElementById("byeMesaje")            
+            sendMesaje(mensaje.value)
+        }
 
 
+    </script>
 
 
-<input id="mensaje" type="text" value="Hola!">
 
-<button onclick="sayHi()">Saludar</button>
 
-</body> 
+    <input id="mensaje" type="text" value="Hola!">
+    <button onclick="sayHi()">Saludar</button>
+
+    <br>
+
+
+    <input id="byeMesaje" type="text" value="Bye!">
+    <button onclick="sayBye()">Despedirme</button>
+
+</body>
 
 </html>
