@@ -30,10 +30,29 @@
       out.innerHTML += evt.data + '<br>';
     }
 
+    /*
     setInterval(function() {
       ws.send('Hello, Server!');
-    }, 1000);
+    }, 1000);*/
+
+    
+
+    function sayHi(){
+
+        mensaje = document.getElementById("mensaje")
+
+        ws.send(mensaje);
+        
+    }
   </script>
-</body>
+
+
+
+
+<input id="mensaje" type="text" value="Hola!">
+
+<button onclick="sayHi()">Saludar</button>
+
+</body> 
 
 </html>
