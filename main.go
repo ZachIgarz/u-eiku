@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"time"
 
+	"u-eiku/ia"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"golang.org/x/net/websocket"
@@ -21,10 +23,7 @@ func hello(c echo.Context) error {
 		defer ws.Close()
 		for {
 			// Write
-
 			//TODO: validar si es saludoo despedida
-
-			//err := websocket.Message.Send(ws, "Hello, Client!")
 
 			// Read
 			msg := ""
@@ -47,7 +46,7 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Static("/", "./public")
 	e.GET("/ws", hello)
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":1324"))
 }
 
 //Escucha la hora del sistema
@@ -80,17 +79,15 @@ func sendMesajeDayOrNight() string {
 }
 
 func sendMesaje(ws *websocket.Conn, c echo.Context, receivedrMesage string) {
-
 	var mesage string
 	mesage = sayHi + " " + sendMesajeDayOrNight()
 	//TODO: validar que el mensaje contenga palabras clave
 	if receivedrMesage == "Bye!" {
-
+		ia.Leer()
 		mesage = sayBye + " " + sendMesajeDayOrNight()
 	}
 
 	err := websocket.Message.Send(ws, mesage)
-
 	if err != nil {
 		c.Logger().Error(err)
 	}
