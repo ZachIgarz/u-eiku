@@ -45,6 +45,8 @@ func hello(c echo.Context) error {
 func main() {
 	KeyWords = ia.NewKeyWords().Words
 
+	ia.WordRepeticions("hola esto es un menjsae de pryuebas, ajjaja")
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
