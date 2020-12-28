@@ -16,7 +16,7 @@ func WordRepeticions(text string) {
 	for _, word := range separatedWords {
 
 		//TODO :existe algo como in de js en go ?? D: deam it
-		if normalize(word) in diccionary {
+		ok := if normalize(word) in diccionary {
 			++dicdiccionary[normalize(word)]
 		}
 		fmt.Println(word)
@@ -25,5 +25,17 @@ func WordRepeticions(text string) {
 }
 
 func normalize(word string) string {
+
+}
+
+func searhInDiccionary(word string, diccionary  map[string]int) bool{
+
+	var count word 
+	for _, wordInDicc := range diccionary{
+		if word == wordInDicc {
+
+		}
+	}
+
 
 }
